@@ -20,4 +20,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.8.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enum\" />
+  </ItemGroup>
+
 </Project>
