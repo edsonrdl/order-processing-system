@@ -1,43 +1,66 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OrderProcessingSystem.Interfaces;
+using OrderProcessingSystem.Models;
+using OrderProcessingSystem.Dto;
 
-namespace OrderProcessingSystem.Controller
+namespace OrderProcessingSystem.Controllers
 {
-c
-    public class OrderController :ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class OrderController : ControllerBase
     {
-        private readonly OrderService _orderService;
+        private readonly IOrder _orderService;
 
-        public OrderController(OrderService orderService)
+        public OrderController(IOrder orderService)
         {
             _orderService = orderService;
         }
 
-        [HttpPost("create")]
-        public IActionResult CreateOrder([FromBody] OrderRequest orderRequest)
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder([FromBody] OrderCreationDto orderDto)
         {
-            _orderService.CreateOrder(orderRequest.Details);
-            return Ok("Pedido enviado para criação.");
+            var result = await _orderService.CreateOrder(orderDto);
+            if (!result.Status)
+                return BadRequest(result.Mensagem);
+
+            return Ok(result);
         }
 
-        [HttpPost("payment")]
-        public IActionResult PaymentOrder([FromBody] OrderRequest orderRequest)
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrders()
         {
-            _orderService.ProcessPayment(orderRequest.Details);
-            return Ok("Detalhes de pagamento enviados.");
+            var result = await _orderService.GetAllOrder();
+            return Ok(result);
         }
 
-        [HttpPost("notify")]
-        public IActionResult NotifyUser([FromBody] OrderRequest orderRequest)
+        [HttpGet("{idOrder:guid}")]
+        public async Task<IActionResult> GetOrderById(Guid idOrder)
         {
-            _orderService.NotifyUser(orderRequest.Details);
-            return Ok("Notificação enviada.");
+            var result = await _orderService.GetById(idOrder);
+            if (!result.Status)
+                return NotFound(result.Mensagem);
+
+            return Ok(result);
         }
 
-        [HttpPost("webhook")]
-        public IActionResult WebhookCallback([FromBody] string callbackData)
+        [HttpPut("{idOrder:guid}")]
+        public async Task<IActionResult> UpdateOrder(Guid idOrder, [FromBody] OrderUpdateDto orderDto)
         {
-            // Processar os dados recebidos do webhook
-            return Ok("Webhook recebido e processado.");
+            var result = await _orderService.UpdateOrder(idOrder, orderDto);
+            if (!result.Status)
+                return NotFound(result.Mensagem);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{idOrder:guid}")]
+        public async Task<IActionResult> DeleteOrder(Guid idOrder)
+        {
+            var result = await _orderService.DeleteOrder(idOrder);
+            if (!result.Status)
+                return NotFound(result.Mensagem);
+
+            return Ok(result);
         }
     }
 }
