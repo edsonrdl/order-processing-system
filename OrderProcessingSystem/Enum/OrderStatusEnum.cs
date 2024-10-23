@@ -2,9 +2,9 @@
 {
     public enum OrderStatusEnum
     {
-        New,
-        PendingPayment,
-        Paid,
-        Notified
+        Pending,
+        Processing,
+        Completed,
+        Cancelled
     }
 }

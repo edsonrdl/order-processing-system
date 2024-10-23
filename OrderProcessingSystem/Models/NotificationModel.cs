@@ -1,10 +1,12 @@
-﻿namespace OrderProcessingSystem.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+public class NotificationModel
 {
-    public class NotificationModel
-    {
-        public Guid NoficationId { get; set; }
-        public Guid OrderId { get; set; }
-        public string Message { get; set; }
-        public DateTime SentAt { get; set; }
-    }
+    public Guid NotificationId { get; set; }
+    public Guid OrderId { get; set; }
+
+    [Required]
+    public string Message { get; set; }
+
+    public DateTime SentAt { get; set; } = DateTime.UtcNow;
 }
