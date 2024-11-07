@@ -4,16 +4,42 @@ using OrderProcessingSystem.Interfaces;
 
 public class RabbitMqService : IRabbitMqService
 {
-    private readonly string exchangeName = "order_exchange";
-
-    public void PublishMessage(string routingKey, string message)
+    public void PublishMessage(string queueName, string message)
     {
-        var factory = new ConnectionFactory() { HostName = "localhost" };
+        // Configuração do ConnectionFactory com as propriedades desejadas
+        var factory = new ConnectionFactory
+        {
+            HostName = "localhost",
+            Port = 5672,
+            UserName = "guest",
+            Password = "guest",
+            VirtualHost = "/",
+            AutomaticRecoveryEnabled = true,
+            NetworkRecoveryInterval = TimeSpan.FromSeconds(10)
+        };
+
+        // Estabelecendo conexão e canal com o RabbitMQ
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
-        channel.ExchangeDeclare(exchange: exchangeName, type: ExchangeType.Topic);
 
+        // Declaração da fila para garantir que ela exista
+        channel.QueueDeclare(
+            queue: queueName, // Nome da fila específica
+            durable: true, // A fila é persistente (sobrevive a reinicializações do servidor)
+            exclusive: false, // Não é exclusiva para a conexão atual
+            autoDelete: false, // Não será excluída quando o último consumidor se desconectar
+            arguments: null // Sem argumentos adicionais
+        );
+
+        // Preparando a mensagem para envio
         var body = Encoding.UTF8.GetBytes(message);
-        channel.BasicPublish(exchange: exchangeName, routingKey: routingKey, body: body);
+
+        // Publicando a mensagem diretamente na fila especificada
+        channel.BasicPublish(
+            exchange: "", // Usar uma exchange vazia para enviar diretamente para a fila
+            routingKey: queueName, // Nome da fila como chave de roteamento
+            basicProperties: null,
+            body: body
+        );
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace OrderProcessingSystem.Interfaces
 {
-    public interface IPayment
+    public interface IPaymentService
     {
     }
 }
