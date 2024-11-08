@@ -32,9 +32,9 @@ builder.Services.AddSingleton<IConnectionFactory>(sp =>
 // Registra o RabbitMqService como singleton, uma vez que ele é compartilhado por vários consumidores
 builder.Services.AddSingleton<IRabbitMqService, RabbitMqService>();
 
-
-// Registra serviços customizados (RabbitMQ e outros serviços)
+// Registra serviços customizados (OrderService e NotificationService)
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<INotificationService, NotificationService>(); // Adicionado para o NotificationService
 
 var app = builder.Build();
 
@@ -47,7 +47,6 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Processing API v1");
     });
 }
-
 
 app.UseStaticFiles();
 

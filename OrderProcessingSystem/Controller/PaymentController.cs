@@ -8,17 +8,17 @@ namespace OrderProcessingSystem.Controllers
     [Route("api/[controller]")]
     public class PaymentController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        private readonly IPaymentService paymentService;
 
-        public PaymentController(IOrderService orderService)
+        public PaymentController(IPaymentService paymentService)
         {
-            _orderService = orderService;
+            this.paymentService = paymentService;
         }
 
         [HttpPost("payment")]
         public IActionResult PaymentOrder([FromBody] OrderRequest orderRequest)
         {
-            _orderService.ProcessPayment(orderRequest.ProductName);
+            this.paymentService.ProcessPayment(orderRequest.ProductName);
             return Ok($"O pagamento do produto {orderRequest.ProductName} foi processado com sucesso.");
         }
     }
