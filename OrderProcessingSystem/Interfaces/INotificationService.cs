@@ -1,7 +1,9 @@
-﻿namespace OrderProcessingSystem.Interfaces
+﻿using OrderProcessingSystem.Dtos.NotificationDtos;
+
+namespace OrderProcessingSystem.Interfaces
 {
     public interface INotificationService
     {
-        void SendNotification(NotificationModel notification);
+        void SendNotification(NotificationRequest notification);
     }
 }

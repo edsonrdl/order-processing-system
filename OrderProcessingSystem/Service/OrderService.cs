@@ -1,4 +1,5 @@
 ﻿using OrderProcessingSystem.Interfaces;
+using OrderProcessingSystem.Models;
 
 namespace OrderProcessingSystem.Service
 {
@@ -11,19 +12,9 @@ namespace OrderProcessingSystem.Service
             _rabbitMqService = rabbitMqService;
         }
 
-        public void CreateOrder(string orderDetails)
+        public  void CreateOrder(OrderModel orderModel)
         {
-            _rabbitMqService.PublishMessage("order.new", orderDetails);
-        }
-
-        public void ProcessPayment(string paymentDetails)
-        {
-            _rabbitMqService.PublishMessage("order.payment", paymentDetails);
-        }
-
-        public void NotifyUser(string notificationDetails)
-        {
-            _rabbitMqService.PublishMessage("order.notification", notificationDetails);
+            _rabbitMqService.PublishMessage("order.new", orderModel);
         }
     }
 }

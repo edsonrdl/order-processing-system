@@ -1,12 +1,13 @@
 ﻿using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
 using OrderProcessingSystem.Interfaces;
 
 public class RabbitMqService : IRabbitMqService
 {
-    public void PublishMessage(string queueName, string message)
+    public void PublishMessage<T>(string queueName, T message)
     {
-        // Configuração do ConnectionFactory com as propriedades desejadas
+   
         var factory = new ConnectionFactory
         {
             HostName = "localhost",
@@ -18,26 +19,24 @@ public class RabbitMqService : IRabbitMqService
             NetworkRecoveryInterval = TimeSpan.FromSeconds(10)
         };
 
-        // Estabelecendo conexão e canal com o RabbitMQ
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
 
-        // Declaração da fila para garantir que ela exista
+
         channel.QueueDeclare(
-            queue: queueName, // Nome da fila específica
-            durable: true, // A fila é persistente (sobrevive a reinicializações do servidor)
-            exclusive: false, // Não é exclusiva para a conexão atual
-            autoDelete: false, // Não será excluída quando o último consumidor se desconectar
-            arguments: null // Sem argumentos adicionais
+            queue: queueName,
+            durable: true,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null
         );
 
-        // Preparando a mensagem para envio
-        var body = Encoding.UTF8.GetBytes(message);
+        string messageJson = JsonSerializer.Serialize(message);
+        var body = Encoding.UTF8.GetBytes(messageJson);
 
-        // Publicando a mensagem diretamente na fila especificada
         channel.BasicPublish(
-            exchange: "", // Usar uma exchange vazia para enviar diretamente para a fila
-            routingKey: queueName, // Nome da fila como chave de roteamento
+            exchange: "",
+            routingKey: queueName,
             basicProperties: null,
             body: body
         );

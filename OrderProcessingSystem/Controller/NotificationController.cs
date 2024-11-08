@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderProcessingSystem.Dtos.OrderDtos;
+using OrderProcessingSystem.Dtos.NotificationDtos; // Usando o correto DTO para Notificação
 using OrderProcessingSystem.Interfaces;
-using OrderProcessingSystem.Service;
 
 namespace OrderProcessingSystem.Controllers
 {
@@ -9,17 +8,25 @@ namespace OrderProcessingSystem.Controllers
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        private readonly INotificationService _notificationService;
 
-        public NotificationController(OrderService orderService)
+        public NotificationController(INotificationService notificationService)
         {
-            _orderService = orderService;
+            _notificationService = notificationService;
         }
 
         [HttpPost("notify")]
-        public IActionResult NotifyUser([FromBody] OrderRequest orderRequest)
+        public IActionResult NotifyUser([FromBody] NotificationRequest notificationRequest)
         {
-            _orderService.NotifyUser(orderRequest.ProductName);
+            // Valida os dados do request
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Chama o serviço para enviar a notificação
+            _notificationService.SendNotification(notificationRequest);
+
             return Ok("Notificação enviada.");
         }
     }

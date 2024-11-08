@@ -7,10 +7,10 @@ namespace OrderProcessingSystem.Models
     {
         public Guid OrderId { get; set; }
 
-        [Required(ErrorMessage = "ProductName é obrigatório.")]
+        [Required(ErrorMessage = "Nome do produto é obrigatório.")]
         public string ProductName { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity deve ser maior que zero.")]
+        [Range(1, int.MaxValue, ErrorMessage = "quantidade deve ser maior que zero.")]
         public int Quantity { get; set; }
 
         public OrderStatusEnum Status { get; set; }
