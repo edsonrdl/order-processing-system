@@ -1,8 +1,9 @@
-﻿namespace OrderProcessingSystem.Interfaces
+﻿using OrderProcessingSystem.Dtos.PaymentDtos;
+
+namespace OrderProcessingSystem.Interfaces
 {
     public interface IPaymentService
     {
-        void ProcessPayment(string paymentDetails);
-
+        void ProcessPayment(PaymentRequest payment);
     }
 }

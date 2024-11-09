@@ -19,7 +19,6 @@ namespace OrderProcessingSystem.Mapper
             };
         }
 
-        // Mapper de OrderModel para OrderResponse
         public static OrderResponse MapToOrderResponse(OrderModel model)
         {
             return new OrderResponse
@@ -29,8 +28,6 @@ namespace OrderProcessingSystem.Mapper
                 Status = model.Status
             };
         }
-
-        // Mapper de OrderModel para OrderRequest (caso necessário)
         public static OrderRequest MapToOrderRequest(OrderModel model)
         {
             return new OrderRequest
@@ -39,8 +36,6 @@ namespace OrderProcessingSystem.Mapper
                 Quantity = model.Quantity
             };
         }
-
-        // Mapper de OrderResponse para OrderModel (caso necessário)
         public static OrderModel MapToOrderModel(OrderResponse response)
         {
             return new OrderModel
@@ -48,8 +43,8 @@ namespace OrderProcessingSystem.Mapper
                 ProductName = response.ProductName,
                 Quantity = response.Quantity,
                 Status = response.Status,
-                OrderId = Guid.NewGuid(), // Ajuste conforme necessário
-                CreatedAt = DateTime.UtcNow // Ajuste conforme necessário
+                OrderId = Guid.NewGuid(),
+                CreatedAt = DateTime.UtcNow 
             };
         }
     }
