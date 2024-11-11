@@ -8,6 +8,11 @@ namespace OrderProcessingSystem.Mapper.PaymentMapper
     {
         public  PaymentModel MapToPaymentModel(PaymentRequest request)
         {
+            if (request.Amount <= 0)
+            {
+                throw new ArgumentException("Valor do pagamento deve ser maior que zero.");
+            }
+
             return new PaymentModel
             {
                 PaymentId = Guid.NewGuid(),

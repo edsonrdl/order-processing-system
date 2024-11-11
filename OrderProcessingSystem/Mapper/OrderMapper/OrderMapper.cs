@@ -9,6 +9,12 @@ namespace OrderProcessingSystem.Mapper.OrderMapper
         // Mapper de OrderRequest para OrderModel
         public  OrderModel MapToOrderModel(OrderRequest request)
         {
+
+            if (request.Quantity <= 0)
+            {
+                throw new ArgumentException("Quantidade do produto deve ser maior que zero.");
+            }
+
             return new OrderModel
             {
                 OrderId = Guid.NewGuid(),

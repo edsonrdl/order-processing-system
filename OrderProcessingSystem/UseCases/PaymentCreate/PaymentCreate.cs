@@ -12,7 +12,7 @@ namespace OrderProcessingSystem.UseCases.PaymentCreate
 
         readonly IPaymentMapper _paymentMapper;
 
-        public PaymentCreate (IPaymentService paymentService, PaymentMapper paymentMapper)
+        public PaymentCreate (IPaymentService paymentService, IPaymentMapper paymentMapper)
         {
            this._paymentService = paymentService;
             this._paymentMapper = paymentMapper;

@@ -9,6 +9,8 @@ namespace OrderProcessingSystem.Models
 
         [Required(ErrorMessage = "O código  do produto é obrigatório.")]
         public Guid OrderId { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Valor do pagamento deve ser maior que zero.")]
         public Decimal Amount { get; set; }
         public PaymentStatusEnum Status { get; set; }
         public DateTime PaymentDate { get; set; }
