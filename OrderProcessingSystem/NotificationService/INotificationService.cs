@@ -4,6 +4,6 @@ namespace OrderProcessingSystem.Notificationservice
 {
     public interface INotificationService
     {
-        void PublishOrderNotification(NotificationModel NotificationModel);
+        void PublishOrderNotification(NotificationModel notificationModel);
     }
 }

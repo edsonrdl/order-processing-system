@@ -1,5 +1,6 @@
 ﻿using OrderProcessingSystem.Dtos.PaymentDtos;
 using OrderProcessingSystem.Mapper.NotificationMapper;
+using OrderProcessingSystem.Mapper.PaymentMapper;
 using OrderProcessingSystem.Models;
 using OrderProcessingSystem.PaymentService;
 
@@ -9,7 +10,7 @@ namespace OrderProcessingSystem.UseCases.PaymentCreate
     {
         readonly IPaymentService _paymentService;
 
-        readonly PaymentMapper _paymentMapper;
+        readonly IPaymentMapper _paymentMapper;
 
         public PaymentCreate (IPaymentService paymentService, PaymentMapper paymentMapper)
         {
@@ -21,7 +22,9 @@ namespace OrderProcessingSystem.UseCases.PaymentCreate
         {
             try
             {
-                PaymentModel paymentModel=this._paymentMapper.(request);
+                PaymentModel paymentModel=this._paymentMapper.MapToPaymentModel(request);
+                Console.WriteLine(paymentModel);
+                this._paymentService.PublishPayment(paymentModel);
 
             }
             catch (Exception ex)

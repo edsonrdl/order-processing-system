@@ -6,6 +6,6 @@ namespace OrderProcessingSystem.UseCases.PaymentCreate
 {
     public interface IPaymentCreate
     {
-        PaymentModel CreatePayment(PaymentRequest request);
+        void CreatePayment(PaymentRequest request);
     }
 }

@@ -11,6 +11,7 @@ using OrderProcessingSystem.Mapper.NotificationMapper;
 using OrderProcessingSystem.Mapper.OrderMapper;
 using OrderProcessingSystem.UseCases.NotificationCreate;
 using OrderProcessingSystem.UseCases.PaymentCreate;
+using OrderProcessingSystem.Mapper.PaymentMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
