@@ -56,15 +56,15 @@ Demonstrar o uso de *Topic Exchange* no RabbitMQ em uma arquitetura de microserv
 
 1. **OrderProcessorService**:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio-order-processor.git
-   cd seu-repositorio-order-processor](https://github.com/edsonrdl/micro-service-order.git
+   git clone https://github.com/edsonrdl/micro-service-order.git
+   cd seu-repositorio-order
 2. **PaymentService**:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio-payment.git
+   git clone https://github.com/edsonrdl/micro-service-payment.git
     cd seu-repositorio-payment
 3. **NotificationService**:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio-notification.git
+   git clone https://github.com/edsonrdl/micro-service-notification.git
     cd seu-repositorio-notification
 3. **API Principal (ASP.NET Core)**:
    ```bash
