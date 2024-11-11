@@ -2,8 +2,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
-using OrderProcessingSystem.Interfaces;
-using OrderProcessingSystem.Service;
+using OrderProcessingSystem.Notificationservice;
+using OrderProcessingSystem.OrderService;
+using OrderProcessingSystem.PaymentService;
+using OrderProcessingSystem.RabbitMqService;
+using OrderProcessingSystem.UseCases.OrderCreate;
+using OrderProcessingSystem.Mapper.NotificationMapper;
+using OrderProcessingSystem.Mapper.OrderMapper;
+using OrderProcessingSystem.UseCases.NotificationCreate;
+using OrderProcessingSystem.UseCases.PaymentCreate;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,13 +35,21 @@ builder.Services.AddSingleton<IConnectionFactory>(sp =>
         Password = builder.Configuration["RabbitMQ:Password"] ?? "guest"
     };
 });
-
-// Registra o RabbitMqService como singleton, uma vez que ele é compartilhado por vários consumidores
+//Inj RabbitQm
 builder.Services.AddSingleton<IRabbitMqService, RabbitMqService>();
-
-// Registra serviços customizados (OrderService e NotificationService)
+//Inj Services Order,Notification,Payment
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<INotificationService, NotificationService>(); // Adicionado para o NotificationService
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+//Inj UseCases Create Order,Notification,Payment
+builder.Services.AddScoped<IOrderCreate, OrderCreate>();
+builder.Services.AddScoped<IPaymentCreate,PaymentCreate>();
+builder.Services.AddScoped<INotificationCreate, NotificationCreate>();
+//Inj Mapper  Order,Notification,Payment
+builder.Services.AddScoped<IOrderMapper, OrderMapper>();
+builder.Services.AddScoped<IPaymentMapper, PaymentMapper>();
+builder.Services.AddScoped<IOrderMapper,  OrderMapper>();
+
 
 var app = builder.Build();
 

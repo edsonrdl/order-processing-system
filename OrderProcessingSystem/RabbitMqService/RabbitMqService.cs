@@ -1,13 +1,13 @@
 ﻿using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
-using OrderProcessingSystem.Interfaces;
+using OrderProcessingSystem.RabbitMqService;
 
 public class RabbitMqService : IRabbitMqService
 {
-    public void PublishMessage<T>(string queueName, T message)
+    public void PublishMessage<T>(string exchangeName, string routingKey, T message)
     {
-   
+
         var factory = new ConnectionFactory
         {
             HostName = "localhost",
@@ -23,22 +23,22 @@ public class RabbitMqService : IRabbitMqService
         using var channel = connection.CreateModel();
 
 
-        channel.QueueDeclare(
-            queue: queueName,
-            durable: true,
-            exclusive: false,
-            autoDelete: false,
-            arguments: null
+        channel.ExchangeDeclare(
+         exchange: exchangeName, 
+         type: "direct",         
+         durable: true,
+         autoDelete: false,
+         arguments: null
         );
 
         string messageJson = JsonSerializer.Serialize(message);
         var body = Encoding.UTF8.GetBytes(messageJson);
 
         channel.BasicPublish(
-            exchange: "",
-            routingKey: queueName,
-            basicProperties: null,
-            body: body
+        exchange: exchangeName,
+        routingKey: routingKey,
+        basicProperties: null,
+        body: body
         );
     }
 }

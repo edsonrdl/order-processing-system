@@ -1,7 +1,7 @@
 ﻿using OrderProcessingSystem.Enum;
 using System.ComponentModel.DataAnnotations;
 
-public class NotificationRequest
+public class NotificationModel
 {
     public Guid NotificationId { get; set; }
 

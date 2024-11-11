@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OrderProcessingSystem.Dtos.PaymentDtos;
-using OrderProcessingSystem.Interfaces;
+using OrderProcessingSystem.PaymentService;
+using OrderProcessingSystem.UseCases.PaymentCreate;
 
 namespace OrderProcessingSystem.Controllers
 {
@@ -8,26 +9,23 @@ namespace OrderProcessingSystem.Controllers
     [Route("api/[controller]")]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentService _paymentService;
+        private readonly IPaymentCreate _paymentCreate;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPaymentCreate paymentCreate)
         {
-            _paymentService = paymentService;
+            this._paymentCreate = paymentCreate;
         }
 
         [HttpPost("payment")]
         public IActionResult PaymentOrder([FromBody] PaymentRequest paymentRequest)
         {
-            // Valida os dados do request
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            this._paymentCreate.CreatePayment(paymentRequest);
 
-            // Mapeia a requisição para o modelo de domínio e processa o pagamento
-            _paymentService.ProcessPayment(paymentRequest);
-
-            return Ok($"O pagamento de {paymentRequest.Amount} para o pedido {paymentRequest.OrderId} foi processado com sucesso.");
+            return Ok($"O pagamento de {paymentRequest.Amount} para o pedido {paymentRequest.OrderId} está sendo  processado.");
         }
     }
 }

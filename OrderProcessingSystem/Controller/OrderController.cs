@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OrderProcessingSystem.Dtos.OrderDtos;
-using OrderProcessingSystem.Interfaces;
-using OrderProcessingSystem.Mapper;
-using OrderProcessingSystem.Models;
-using OrderProcessingSystem.Service;
+using OrderProcessingSystem.Mapper.OrderMapper;
+using OrderProcessingSystem.UseCases.OrderCreate;
 
 namespace OrderProcessingSystem.Controllers
 {
@@ -11,11 +9,11 @@ namespace OrderProcessingSystem.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        private readonly IOrderCreate _orderCreate;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderCreate iOrderCreate)
         {
-            _orderService = orderService;
+            this._orderCreate = iOrderCreate;
         }
 
         [HttpPost("create")]
@@ -26,11 +24,7 @@ namespace OrderProcessingSystem.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-       
-            OrderModel orderModel = OrderMapper.MapToOrderModel(orderRequest);
-
-            _orderService.CreateOrder(orderModel);
+            this._orderCreate.CreateOrder(orderRequest);
 
             return Ok("Pedido enviado para criação.");
         }

@@ -2,10 +2,9 @@
 {
     public enum NotificationStatusEnum
     {
-        PendingPayment,
-        PaymentCompleted,
-        OrderShipped,
-        OrderDelivered,
-        OrderCancelled
+        Pending = 1,
+        Processing = 2,
+        Completed = 3,
+        Cancelled = 4
     }
 }

@@ -1,6 +1,6 @@
 ﻿using OrderProcessingSystem.Dtos.PaymentDtos;
 
-namespace OrderProcessingSystem.Interfaces
+namespace OrderProcessingSystem.PaymentService
 {
     public interface IPaymentService
     {

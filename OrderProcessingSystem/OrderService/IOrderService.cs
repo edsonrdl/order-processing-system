@@ -1,9 +1,9 @@
 ﻿using OrderProcessingSystem.Models;
 
-namespace OrderProcessingSystem.Interfaces
+namespace OrderProcessingSystem.OrderService
 {
     public interface IOrderService
     {
-        void CreateOrder(OrderModel order);
+        void PublishOrder(OrderModel order);
     }
 }

@@ -1,9 +1,9 @@
-﻿using OrderProcessingSystem.Interfaces;
-using OrderProcessingSystem.Dtos.PaymentDtos;
+﻿using OrderProcessingSystem.Dtos.PaymentDtos;
 using OrderProcessingSystem.Models;
 using OrderProcessingSystem.Enum;
+using OrderProcessingSystem.RabbitMqService;
 
-namespace OrderProcessingSystem.Service
+namespace OrderProcessingSystem.PaymentService
 {
     public class PaymentService : IPaymentService
     {
@@ -16,11 +16,13 @@ namespace OrderProcessingSystem.Service
 
         public void ProcessPayment(PaymentRequest payment)
         {
-            // Validação ou lógica adicional pode ser aplicada aqui
             string paymentDetails = GeneratePaymentMessage(payment);
 
-            // Publica a mensagem usando RabbitMQ
-            _rabbitMqService.PublishMessage("order.payment", paymentDetails);
+            string exchangeName = "service_exchange";
+
+            string routingKey = "order.payment";
+
+            _rabbitMqService.PublishMessage(exchangeName,routingKey, paymentDetails);
         }
 
         private string GeneratePaymentMessage(PaymentRequest payment)
@@ -28,8 +30,8 @@ namespace OrderProcessingSystem.Service
             string statusMessage = payment.Status switch
             {
                 PaymentStatusEnum.Pending => "Pagamento pendente.",
+                PaymentStatusEnum.Processing => "Pagamento sendo processado.",
                 PaymentStatusEnum.Completed => "Pagamento concluído.",
-                PaymentStatusEnum.Failed => "Pagamento falhou.",
                 PaymentStatusEnum.Cancelled => "Pagamento cancelado.",
                 _ => "Status de pagamento desconhecido."
             };
