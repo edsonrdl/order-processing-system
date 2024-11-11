@@ -8,10 +8,10 @@ namespace OrderProcessingSystem.UseCases.NotificationCreate
 {
     public class NotificationCreate : INotificationCreate
     {
-        readonly IPaymentMapper _notificationMapper;
+        readonly INotificationMapper _notificationMapper;
 
         readonly INotificationService   _notificationService;
-        public NotificationCreate(IPaymentMapper notificationMapper  ,INotificationService notificationService)
+        public NotificationCreate(INotificationMapper notificationMapper  ,INotificationService notificationService)
         {
             this._notificationMapper = notificationMapper;
             this._notificationService = notificationService;
