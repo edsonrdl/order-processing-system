@@ -23,9 +23,11 @@ namespace OrderProcessingSystem.Notificationservice
 
             string exchangeName = "service_exchange";
 
+            string queue = "notification_queue";
+
             string routingKey = "order.notification";
 
-            _rabbitMqService.PublishMessage(exchangeName, routingKey, notification);
+            _rabbitMqService.PublishMessage(exchangeName,queue, routingKey, notification);
         }
 
         private NotificationModel GenerateNotificationMessage(NotificationModel notification)

@@ -2,6 +2,6 @@
 {
     public interface IRabbitMqService
     {
-        void PublishMessage<T>(string exchangeName, string routingKey, T message);
+        void PublishMessage<T>(string exchangeName, string queueName, string routingKey, T message);
     }
 }

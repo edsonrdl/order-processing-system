@@ -17,11 +17,14 @@ namespace OrderProcessingSystem.OrderService
             
             string exchangeName = "service_exchange";
 
-            
+
+            string queue = "order_queue";
+
+
             string routingKey = "order.new";
 
 
-            _rabbitMqService.PublishMessage(exchangeName, routingKey, orderModel);
+            _rabbitMqService.PublishMessage(exchangeName, queue, routingKey, orderModel);
         }
 
     }

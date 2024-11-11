@@ -19,9 +19,11 @@ namespace OrderProcessingSystem.PaymentService
  
             string exchangeName = "service_exchange";
 
+            string queue = "payment_queue";
+
             string routingKey = "order.payment";
 
-            _rabbitMqService.PublishMessage(exchangeName,routingKey, payment);
+            _rabbitMqService.PublishMessage(exchangeName,queue, routingKey, payment);
         }
     }
 }

@@ -5,7 +5,7 @@ using OrderProcessingSystem.RabbitMqService;
 
 public class RabbitMqService : IRabbitMqService
 {
-    public void PublishMessage<T>(string exchangeName, string routingKey, T message)
+    public void PublishMessage<T>(string exchangeName, string queueName, string routingKey, T message)
     {
 
         var factory = new ConnectionFactory
@@ -33,6 +33,18 @@ public class RabbitMqService : IRabbitMqService
 
         string messageJson = JsonSerializer.Serialize(message);
         var body = Encoding.UTF8.GetBytes(messageJson);
+
+
+        channel.QueueDeclare(
+        queue: queueName,
+        durable: true,
+        exclusive: false,
+        autoDelete: false,
+        arguments: null
+        );
+
+       channel.QueueBind(queueName, exchangeName, routingKey);
+
 
         channel.BasicPublish(
         exchange: exchangeName,
