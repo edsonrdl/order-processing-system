@@ -71,6 +71,6 @@ Demonstrar o uso de *Topic Exchange* no RabbitMQ em uma arquitetura de microserv
    git clone https://github.com/seu-usuario/seu-repositorio-notification.git
     cd seu-repositorio-notification
    
-### Versões Utilizadas (Preencher)
+### Versões Utilizadas 
    - RabbitMQ: ____ (Versão utilizada : 3.13.7 )
-   -.NET Core: ____ (Versão utilizada :net8.0)
+   -.NET Core: ____ (Versão utilizada : net8.0 )
