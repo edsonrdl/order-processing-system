@@ -74,3 +74,7 @@ Demonstrar o uso de *Topic Exchange* no RabbitMQ em uma arquitetura de microserv
 ### Versões Utilizadas 
    - RabbitMQ: ____ (Versão utilizada : 3.13.7 )
    -.NET Core: ____ (Versão utilizada : net8.0 )
+
+### Visão Geral
+![order-processing-system](https://github.com/user-attachments/assets/6f31e143-0248-4a5b-9f19-30493409732d)
+
