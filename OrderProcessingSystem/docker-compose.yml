@@ -1,0 +1,7 @@
+﻿services:
+  minhaaplicacao:
+    build: .
+    container_name: order-processing-system
+    ports:
+      - "8080:80"
+    restart: always

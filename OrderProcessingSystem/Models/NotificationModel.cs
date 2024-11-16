@@ -9,7 +9,7 @@ public class NotificationModel
     public Guid OrderId { get; set; }
 
     [Required(ErrorMessage ="Mensagem do estado da compra deve ser informado!")]
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     public DateTime SentAt { get; set; } = DateTime.UtcNow;
 
