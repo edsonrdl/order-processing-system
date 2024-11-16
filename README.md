@@ -1,5 +1,9 @@
 # order-processing-system
 
+### Visão Geral
+![order-processing-system](https://github.com/user-attachments/assets/6f31e143-0248-4a5b-9f19-30493409732d)
+
+
 ## Atenção ! Após a finalização do projeto deixarei o docker-compose.ym com toda a confiruração para as imagens do projeto para criação dos container do RabbitMq e dos bancos de dados do Mongodb para os microservicos em Node.js
 
 ## Projeto: Sistema de Processamento de Pedidos com Topic Exchange
@@ -75,6 +79,4 @@ Demonstrar o uso de *Topic Exchange* no RabbitMQ em uma arquitetura de microserv
    - RabbitMQ: ____ (Versão utilizada : 3.13.7 )
    -.NET Core: ____ (Versão utilizada : net8.0 )
 
-### Visão Geral
-![order-processing-system](https://github.com/user-attachments/assets/6f31e143-0248-4a5b-9f19-30493409732d)
 
