@@ -1,6 +1,8 @@
-﻿services:
+﻿version: '3.8'
+services:
   minhaaplicacao:
-    build: .
+    build:
+      context: .
     container_name: order-processing-system
     ports:
       - "8080:80"

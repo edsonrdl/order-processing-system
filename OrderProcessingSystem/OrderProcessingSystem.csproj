@@ -14,10 +14,6 @@
     <EmbeddedResource Remove="Pages\**" />
     <None Remove="Pages\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Dockerfile" />
-  </ItemGroup>
 	<!--  
   <ItemGroup>
     <Compile Include="Dockerfile" />
