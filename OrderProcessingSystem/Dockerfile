@@ -9,11 +9,11 @@ COPY . ./
 # Restaurar as dependências
 RUN dotnet restore
 
-# Publicar a aplicação como self-contained para win-x64
-RUN dotnet publish "./OrderProcessingSystem.csproj" -c Release -r win-x64 --self-contained true --output /app/publish
+# Publicar a aplicação como self-contained para Linux
+RUN dotnet publish "./OrderProcessingSystem.csproj" -c Release -r linux-x64 --self-contained true --output /app/publish
 
 # Etapa 2: Execução
-FROM mcr.microsoft.com/windows/servercore:ltsc2022 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish ./
 
@@ -21,4 +21,4 @@ COPY --from=build /app/publish ./
 EXPOSE 80
 
 # Comando de entrada para iniciar o aplicativo
-ENTRYPOINT ["./OrderProcessingSystem.exe"]
+ENTRYPOINT ["./OrderProcessingSystem"]

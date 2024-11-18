@@ -18,13 +18,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Adiciona controladores e serviços para API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-// Configuração do Swagger para documentação da API
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order Processing API", Version = "v1" });
 });
-builder.Services.AddRazorPages();
 
 // Configuração do RabbitMQ (injeção de dependência para uso em serviços)
 builder.Services.AddSingleton<IConnectionFactory>(sp =>
@@ -55,22 +52,43 @@ builder.Services.AddScoped<IOrderMapper, OrderMapper>();
 builder.Services.AddScoped<IPaymentMapper, PaymentMapper>();
 builder.Services.AddScoped<INotificationMapper, NotificationMapper>();
 
+// Adiciona configuração de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
-// Configuração do pipeline de requisições HTTP
-if (app.Environment.IsDevelopment())
+// Configuração do pipeline de requisições HTTP em desenvolvimento
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI(c =>
+//    {
+//        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Processing API v1");
+//    });
+//}
+
+// Configuração do pipeline de requisições HTTP em produção/container para testar a aplicação
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Processing API v1");
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order Processing API v1");
+});
+
+// Configuração do CORS
+app.UseCors();
 
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-app.MapRazorPages();
 app.MapControllers();
-
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
 app.Run();
+

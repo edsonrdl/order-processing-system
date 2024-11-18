@@ -1,9 +1,10 @@
-﻿version: '3.8'
-services:
+﻿services:
   minhaaplicacao:
     build:
       context: .
     container_name: order-processing-system
     ports:
-      - "8080:80"
+        - "9090:8080" 
     restart: always
+    volumes:
+      - ./local/diretorio:/app/diretorio-no-container
