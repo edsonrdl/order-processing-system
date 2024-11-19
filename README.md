@@ -72,7 +72,7 @@ Demonstrar o uso de *Topic Exchange* no RabbitMQ em uma arquitetura de microserv
     cd seu-repositorio-notification
 3. **API Principal (ASP.NET Core)**:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio-notification.git
+   git clone https://github.com/edsonrdl/order-processing-system.git
     cd seu-repositorio-notification
    
 ### Versões Utilizadas 
