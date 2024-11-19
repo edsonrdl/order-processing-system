@@ -20,5 +20,5 @@ COPY --from=build /app/publish ./
 # Expor a porta desejada
 EXPOSE 80
 
-# Comando de entrada para iniciar o aplicativo
+# Comando de entrada para iniciar o aplicativo (se for self-contained)
 ENTRYPOINT ["./OrderProcessingSystem"]

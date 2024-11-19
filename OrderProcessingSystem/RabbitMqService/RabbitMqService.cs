@@ -10,7 +10,7 @@ public class RabbitMqService : IRabbitMqService
 
         var factory = new ConnectionFactory
         {
-            HostName = "localhost",
+            HostName = "myrabbitmq",
             Port = 5672,
             UserName = "guest",
             Password = "guest",

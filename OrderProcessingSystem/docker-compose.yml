@@ -4,7 +4,25 @@
       context: .
     container_name: order-processing-system
     ports:
-        - "9090:8080" 
+      - "9090:8080" 
     restart: always
     volumes:
       - ./local/diretorio:/app/diretorio-no-container
+    networks:
+      - minha_rede
+
+  myrabbitmq:
+    image: rabbitmq:3.13.7-management
+    container_name: myrabbitmq
+    ports:
+      - "5672:5672"  # Porta de comunicação
+      - "15672:15672" # Porta do painel de administração
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - minha_rede
+
+networks:
+  minha_rede:
+    driver: bridge
